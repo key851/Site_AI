@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Структура нормативного обеспечения{% endblock %}
+{% block content %}
+<section class="page-head compact">
+    <div class="container">
+        <span class="eyebrow">Иерархия</span>
+        <h1>Структура нормативного обеспечения ИИ</h1>
+        <p>Слева — интерактивное дерево. Клик по узлу раскрывает ветки и показывает описание.</p>
+    </div>
+</section>
+
+<section class="container tree-layout">
+    <div class="tree-panel">
+        <div class="tree-toolbar">
+            <button class="btn secondary" type="button" id="expandTree">Раскрыть всё</button>
+            <button class="btn ghost" type="button" id="collapseTree">Свернуть всё</button>
+        </div>
+        <div id="normativeTree" class="normative-tree"></div>
+    </div>
+    <aside class="tree-details" id="treeDetails">
+        <span class="eyebrow">Выбранный узел</span>
+        <h2>Система нормативного обеспечения ИИ</h2>
+        <p>Нажми на любой пункт дерева, чтобы посмотреть описание и перейти к категории.</p>
+    </aside>
+</section>
+
+<section class="container structure-flow">
+    {% for level in levels %}
+    <article id="{{ level.slug }}" class="structure-level {{ level.color }}">
+        <div class="structure-title">
+            <span>{{ level.number }}</span>
+            <div>
+                <h2>{{ level.title }}</h2>
+                <p>{{ level.description }}</p>
+            </div>
+        </div>
+        <div class="structure-items">
+            {% for item in level.children %}
+            <a href="/categories/{{ item.slug }}" class="structure-item">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.example }}</p>
+            </a>
+            {% endfor %}
+        </div>
+    </article>
+    {% endfor %}
+</section>
+
+<script>
+    window.NORMATIVE_TREE = {{ tree_data | tojson }};
+</script>
+<script defer src="{{ url_for('static', path='js/tree.js') }}"></script>
+{% endblock %}

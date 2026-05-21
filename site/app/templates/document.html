@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ document.short_title }}{% endblock %}
+{% block content %}
+<section class="page-head document-head">
+    <div class="container">
+        <a href="/catalog" class="back-link">← В каталог</a>
+        <div class="doc-badges">
+            <span>{{ document.type }}</span>
+            <span>{{ document.status }}</span>
+            <span>{{ document.category }}</span>
+        </div>
+        <h1>{{ document.title }}</h1>
+        <p>{{ document.summary }}</p>
+    </div>
+</section>
+
+<section class="container document-layout">
+    <article class="document-main">
+        <h2>Краткое описание</h2>
+        <p>{{ document.summary }}</p>
+        <h2>Значение для регулирования ИИ</h2>
+        <p>
+            Документ используется в системе нормативного обеспечения ИИ как источник требований,
+            ориентиров или ограничений для разработки, внедрения и эксплуатации ИИ-систем.
+        </p>
+        <h2>Где применяется</h2>
+        <ul class="nice-list">
+        </ul>
+    </article>
+
+    <aside class="document-sidebar">
+        <div class="info-box">
+            <h2>Карточка документа</h2>
+            <dl class="vertical-meta">
+                <div><dt>Тип</dt><dd>{{ document.type }}</dd></div>
+                <div><dt>Номер</dt><dd>{{ document.number }}</dd></div>
+                <div><dt>Дата</dt><dd>{{ document.date }}</dd></div>
+                <div><dt>Орган</dt><dd>{{ document.authority }}</dd></div>
+                <div><dt>Статус</dt><dd>{{ document.status }}</dd></div>
+            </dl>
+        </div>
+        <div class="info-box">
+            <h2>Связанные документы</h2>
+            {% for doc in related %}
+            <a class="related-link" href="/documents/{{ doc.id }}">{{ doc.short_title }}</a>
+            {% else %}
+            <p>Связанных документов пока нет.</p>
+            {% endfor %}
+        </div>
+    </aside>
+</section>
+{% endblock %}

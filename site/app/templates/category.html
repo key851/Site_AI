@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ category.title }} · Категория{% endblock %}
+{% block content %}
+<section class="page-head compact">
+    <div class="container">
+        <a href="/structure" class="back-link">← К структуре</a>
+        <span class="eyebrow">Категория</span>
+        <h1>{{ category.title }}</h1>
+        {% if category.description %}<p>{{ category.description }}</p>{% endif %}
+        {% if category.example %}<p><strong>Пример:</strong> {{ category.example }}</p>{% endif %}
+    </div>
+</section>
+
+<section class="container section-block">
+    <div class="section-heading row-between">
+        <div>
+            <span class="eyebrow">Документы</span>
+            <h2>Документы в этой ветке</h2>
+        </div>
+        <a class="btn secondary" href="/catalog?category={{ category.slug }}">Открыть в каталоге</a>
+    </div>
+
+    <div class="doc-list">
+        {% for doc in documents %}
+            {% include "partials/document_card.html" %}
+        {% else %}
+            <div class="empty-state">
+                В этой ветке пока нет документов. Для заглушек это нормально: рабочими остаются IT, транспорт/БПЛА, сельское хозяйство и ГОСТы.
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

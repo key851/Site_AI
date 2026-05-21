@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    container_name: ai_norms_postgres
+    environment:
+      POSTGRES_DB: ai_norms
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - ai_norms_pgdata:/var/lib/postgresql/data
+
+volumes:
+  ai_norms_pgdata:

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Стандартизация ИИ{% endblock %}
+{% block content %}
+<section class="page-head compact standards-hero">
+    <div class="container">
+        <span class="eyebrow">ГОСТ Р и ПНСТ</span>
+        <h1>Уровень стандартизации</h1>
+        <p>Терминология, классификация, качество, доверие, данные, безопасность и отраслевые стандарты ИИ.</p>
+    </div>
+</section>
+
+<section class="container standards-grid">
+    <article class="standard-box">
+        <h2>Базовые ГОСТы</h2>
+        <ul>
+            <li>ГОСТ Р 71476-2024 — терминология ИИ</li>
+            <li>ГОСТ Р 59277-2020 — классификация ИИ-систем</li>
+            <li>ГОСТ Р 59276-2020 — доверие к ИИ</li>
+            <li>ГОСТ Р 59898-2021 — качество ИИ-систем</li>
+        </ul>
+    </article>
+    <article class="standard-box">
+        <h2>ГОСТы по данным</h2>
+        <ul>
+            <li>ГОСТ Р 71484.1-2024 — качество данных</li>
+            <li>ГОСТ Р 71484.2-2024 — метрики качества</li>
+            <li>ГОСТ Р 71484.3-2024 — управление качеством</li>
+            <li>ПНСТ 848-2023 — большие данные</li>
+        </ul>
+    </article>
+    <article class="standard-box">
+        <h2>Отраслевые стандарты</h2>
+        <ul>
+            <li>ГОСТ Р 59921.1-2022 — медицина</li>
+            <li>ГОСТ Р 59920-2021 — сельское хозяйство</li>
+            <li>ГОСТ Р 71686-2024 — промышленность</li>
+            <li>ГОСТ Р 59896-2021 — образование</li>
+        </ul>
+    </article>
+</section>
+
+<section class="container section-block">
+    <div class="section-heading row-between">
+        <div>
+            <span class="eyebrow">Документы</span>
+            <h2>ГОСТы в каталоге</h2>
+        </div>
+        <a href="/catalog?doc_type=ГОСТ Р" class="text-link">Фильтр ГОСТ Р →</a>
+    </div>
+    <div class="doc-grid">
+        {% for doc in documents %}
+            {% include "partials/document_card.html" %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

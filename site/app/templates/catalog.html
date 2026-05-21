@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Каталог документов{% endblock %}
+{% block content %}
+<section class="page-head compact">
+    <div class="container">
+        <span class="eyebrow">Каталог</span>
+        <h1>Нормативные документы по ИИ</h1>
+        <p>Фильтрация по типу документа, статусу, номеру, отрасли, уровню и ключевым словам.</p>
+    </div>
+</section>
+
+<section class="container catalog-layout">
+    <aside class="filter-panel">
+        <h2>Фильтры</h2>
+        <form method="get" action="/catalog" class="filter-form">
+            <label>
+                Поиск
+                <input name="q" value="{{ q }}" placeholder="Например: ГОСТ, 152-ФЗ, БПЛА">
+            </label>
+            <label>
+                Тип документа
+                <select name="doc_type">
+                    <option value="">Все типы</option>
+                    {% for t in doc_types %}
+                    <option value="{{ t }}" {% if selected_type == t %}selected{% endif %}>{{ t }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                Категория / ветка
+                <select name="category">
+                    <option value="">Все категории</option>
+                    {% for c in categories %}
+                    <option value="{{ c.slug }}" {% if selected_category == c.slug %}selected{% endif %}>
+                        {{ c.number ~ '. ' if c.number else '' }}{{ c.title }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                Статус
+                <select name="status">
+                    <option value="">Все статусы</option>
+                    {% for s in statuses %}
+                    <option value="{{ s }}" {% if selected_status == s %}selected{% endif %}>{{ s }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <button class="btn primary full" type="submit">Применить</button>
+            <a class="btn ghost full" href="/catalog">Сбросить</a>
+        </form>
+    </aside>
+
+    <div class="catalog-content">
+        <div class="catalog-toolbar">
+            <strong>Найдено: {{ total }}</strong>
+        </div>
+        <div class="doc-list">
+            {% for doc in documents %}
+                {% include "partials/document_card.html" %}
+            {% else %}
+                <div class="empty-state">Документы не найдены. Попробуй изменить фильтры.</div>
+            {% endfor %}
+        </div>
+        {% if pages_count > 1 %}
+            <div class="pagination">
+                {% if page > 1 %}
+                    <a class="btn secondary" href="/catalog?page={{ page - 1 }}&q={{ q }}&category={{ selected_category }}&doc_type={{ selected_type }}&status={{ selected_status }}">
+                        ← Назад
+                    </a>
+                {% endif %}
+                
+                <span class="pagination-info">
+                    Страница {{ page }} из {{ pages_count }}
+                </span>
+            
+                {% if page < pages_count %}
+                    <a class="btn secondary" href="/catalog?page={{ page + 1 }}&q={{ q }}&category={{ selected_category }}&doc_type={{ selected_type }}&status={{ selected_status }}">
+                        Вперёд →
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,67 @@
+<article class="doc-card">
+    <div class="doc-card-top">
+        <span class="doc-type">
+            {{ doc.get("doc_type") or doc.get("type") or "Документ" }}
+        </span>
+
+        {% if doc.get("status") %}
+            <span class="doc-status">{{ doc.get("status") }}</span>
+        {% endif %}
+    </div>
+
+    <h3>
+        <a href="/documents/{{ doc.get('id') }}">
+            {{ doc.get("short_title") or doc.get("title") }}
+        </a>
+    </h3>
+
+    <p>{{ doc.get("summary") or "Описание документа отсутствует." }}</p>
+
+    <dl class="doc-meta">
+        <div>
+            <dt>Номер</dt>
+            <dd>{{ doc.get("number") or "—" }}</dd>
+        </div>
+
+        <div>
+            <dt>Дата</dt>
+            <dd>{{ doc.get("date") or doc.get("adopted_at") or doc.get("published_at") or "—" }}</dd>
+        </div>
+
+        <div>
+            <dt>Раздел</dt>
+            <dd>
+                {% set categories = doc.get("categories") or [] %}
+                {% if categories %}
+                    {{ category_title(categories[0]) }}
+                {% else %}
+                    {{ doc.get("category") or "Без раздела" }}
+                {% endif %}
+            </dd>
+        </div>
+    </dl>
+
+    {% set categories = doc.get("categories") or [] %}
+    {% if categories %}
+        <div class="category-row">
+            {% for slug in categories %}
+                <a class="category-chip" href="/categories/{{ slug }}">
+                    {{ category_title(slug) }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="doc-source">
+        <span>Источник:</span>
+        {% if doc.get("source_url") %}
+            <a href="{{ doc.get('source_url') }}" target="_blank">
+                {{ doc.get("authority") or doc.get("source_name") or "Официальный источник" }}
+            </a>
+        {% else %}
+            <strong>
+                {{ doc.get("authority") or doc.get("source_name") or "Официальный источник" }}
+            </strong>
+        {% endif %}
+    </div>
+</article>

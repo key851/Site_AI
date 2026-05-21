@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Официальные источники{% endblock %}
+
+{% block content %}
+<div class="sources-page">
+
+    <section class="page-hero">
+        <div>
+            <p class="eyebrow">мониторинг</p>
+            <h1>Официальные источники нормативных документов</h1>
+            <p>
+                Система использует официальные сайты и реестры для поиска новых нормативных актов,
+                проектов документов и стандартов по искусственному интеллекту.
+            </p>
+        </div>
+    </section>
+
+    <section class="sources-layout">
+        {% for group in sources %}
+            <article class="source-group">
+                <h2>{{ group["group"] }}</h2>
+
+                <div class="source-grid">
+                    {% for source in group["items"] %}
+                        <div class="source-card">
+                            <div class="source-card-top">
+                                <h3>{{ source["name"] }}</h3>
+                                <span class="source-priority">{{ source["priority"] }}</span>
+                            </div>
+
+                            <p>{{ source["description"] }}</p>
+
+                            <div class="source-meta">
+                                <span>{{ source["status"] }}</span>
+                            </div>
+
+                            <a class="source-link" href="{{ source["url"] }}" target="_blank">
+                                Перейти к источнику →
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+
+</div>
+{% endblock %}

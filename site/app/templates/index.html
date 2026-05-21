@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Главная · Нормативное обеспечение ИИ{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-copy">
+            <span class="eyebrow">Каталог нормативных документов</span>
+            <h1>Система нормативного обеспечения искусственного интеллекта в РФ</h1>
+            <p>
+                Многостраничный каталог для хранения законов, указов, постановлений, ГОСТов,
+                ПНСТ, этических кодексов и отраслевых документов, связанных с разработкой и применением ИИ.
+            </p>
+            <form class="hero-search" action="/catalog" method="get">
+                <input name="q" type="search" placeholder="Найти документ: 152-ФЗ, ГОСТ, медицина...">
+                <button type="submit">Искать</button>
+            </form>
+            <div class="hero-actions">
+                <a class="btn primary" href="/catalog">Открыть каталог</a>
+                <a class="btn secondary" href="/structure">Посмотреть структуру</a>
+            </div>
+        </div>
+        <aside class="hero-card">
+            <div class="hero-card-head">
+                <span>5</span>
+                <p>уровней классификации</p>
+            </div>
+            <ul>
+                <li>стратегия и концепции;</li>
+                <li>законодательный уровень;</li>
+                <li>государственная поддержка;</li>
+                <li>стандартизация ГОСТ / ПНСТ;</li>
+                <li>отраслевые контуры применения.</li>
+            </ul>
+        </aside>
+    </div>
+</section>
+
+<section class="container section-block">
+    <div class="section-heading">
+        <span class="eyebrow">Структура</span>
+        <h2>Уровни нормативного обеспечения</h2>
+        <p>Каждый блок можно превратить в отдельный раздел сайта с документами, фильтрами и карточками.</p>
+    </div>
+    <div class="level-grid">
+        {% for level in levels %}
+        <article class="level-card {{ level.color }}">
+            <div class="level-number">{{ level.number }}</div>
+            <h3>{{ level.title }}</h3>
+            <p>{{ level.description }}</p>
+            <a href="/structure#{{ level.code }}">Подробнее</a>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container section-block">
+    <div class="section-heading row-between">
+        <div>
+            <span class="eyebrow">Документы</span>
+            <h2>Последние добавленные</h2>
+        </div>
+        <a href="/catalog" class="text-link">Все документы →</a>
+    </div>
+    <div class="doc-grid">
+        {% for doc in documents %}
+            {% include "partials/document_card.html" %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

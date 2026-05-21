@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block title %}Мониторинг источников{% endblock %}
+{% block content %}
+<section class="page-head compact">
+  <div class="container">
+    <span class="eyebrow">Мониторинг</span>
+    <h1>Новые документы из официальных источников</h1>
+    <p>
+      Поиск документов из официальных источников. С ними можно ознакомиться на
+      вкладке "Источники"
+    </p>
+  </div>
+</section>
+
+<section class="container section-block">
+  <div class="parser-actions">
+    <form method="post" action="/admin/parser/run-pravo">
+      <button class="btn primary" type="submit">Проверить pravo.gov.ru</button>
+    </form>
+    <form method="post" action="/admin/parser/run-mintrans">
+      <button class="btn secondary" type="submit">
+        Загрузить документы Минтранса
+      </button>
+    </form>
+
+    <form method="post" action="/admin/parser/run-mcx">
+      <button class="btn secondary" type="submit">
+        Загрузить документы Минсельхоза
+      </button>
+    </form>
+
+    <form method="post" action="/admin/parser/run-digital">
+      <button class="btn secondary" type="submit">
+        Загрузить документы Минцифры
+      </button>
+    </form>
+
+    <form method="post" action="/admin/parser/run-gost">
+      <button class="btn secondary" type="submit">
+        Загрузить ГОСТы Росстандарта
+      </button>
+    </form>
+
+    <a href="/catalog" class="btn ghost">Перейти в каталог</a>
+  </div>
+</section>
+
+<section class="container section-block">
+  <div class="section-heading row-between">
+    <div>
+      <span class="eyebrow">Очередь</span>
+      <h2>Документы, найденные парсером</h2>
+    </div>
+    <span class="pill">Найдено: {{ documents|length }}</span>
+  </div>
+
+  <div class="doc-list">
+    {% for doc in documents %} {% include "partials/document_card.html" %} {%
+    else %}
+    <div class="empty-state">Парсер ещё ничего не добавил.</div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

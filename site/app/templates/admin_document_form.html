@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Добавить документ{% endblock %}
+{% block content %}
+<section class="page-head compact">
+    <div class="container">
+        <span class="eyebrow">Админка · макет</span>
+        <h1>Добавление нормативного документа</h1>
+        <p>Добавить новый нормативный документ в каталог</p>
+    </div>
+</section>
+
+<section class="container form-shell">
+    <form class="document-form">
+        <div class="form-grid">
+            <label class="wide">Название документа
+                <input placeholder="Например: Федеральный закон от ...">
+            </label>
+            <label>Краткое название
+                <input placeholder="152-ФЗ «О персональных данных»">
+            </label>
+            <label>Тип документа
+                <select>
+                    {% for t in doc_types %}<option>{{ t }}</option>{% endfor %}
+                </select>
+            </label>
+            <label>Номер
+                <input placeholder="490, 152-ФЗ, 59921.1-2022">
+            </label>
+            <label>Дата принятия
+                <input type="date">
+            </label>
+            <label>Статус
+                <select>
+                    {% for s in statuses %}<option>{{ s }}</option>{% endfor %}
+                </select>
+            </label>
+            <label>Раздел структуры
+                <select>
+                    {% for level in levels %}<option>{{ level.number }}. {{ level.title }}</option>{% endfor %}
+                </select>
+            </label>
+            <label class="wide">Краткое описание
+                <textarea rows="4" placeholder="Опиши, зачем документ нужен для нормативного обеспечения ИИ"></textarea>
+            </label>
+            <label class="wide">Ссылка на источник
+                <input placeholder="https://...">
+            </label>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn primary">Сохранить документ</button>
+            <a class="btn secondary" href="/catalog">Отмена</a>
+        </div>
+    </form>
+</section>
+{% endblock %}
